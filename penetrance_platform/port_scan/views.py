@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import CreateView
+from django.template import loader
+from django.http import HttpResponse, JsonResponse
 from .forms import PortScanForm
 from .port_scan_module.port_scan_class import PortScanClass
+from .models import PortScanLog
 
 
 # Create your views here.
@@ -24,7 +27,9 @@ class PortScanView(CreateView):
 
     def get(self, request, *args, **kwargs):
         context = {'form': PortScanForm()}
-        return render(request, "port_scan.html", context)
+
+        port_scan_template = loader.get_template('port_scan.html')
+        return HttpResponse(port_scan_template.render(context, request))
 
     def post(self, request, *args, **kwargs):
         port_scanner = PortScanClass.instance()
@@ -38,9 +43,11 @@ class PortScanView(CreateView):
             scan_method = self.scan_method_dic[form['scan_method']]
             logging = form['logging']
 
-            port_scanner.scan(host, ports, scan_method)
-            # Next need logging logic
+            result = port_scanner.scan(host, ports, scan_method)
+            # logging logic
 
+            if logging:
+                port_scan_log = PortScanLog.objects.create(host=host, result=result)
+                port_scan_log.save()
 
-
-
+        return JsonResponse({'result': result}, json_dumps_params={'ensure_ascii': True})

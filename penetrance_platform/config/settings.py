@@ -31,6 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'penetrance_platform.port_scan',
+    'penetrance_platform.information_disclosure',
+    'penetrance_platform.xss',
+    'penetrance_platform.sql_injection',
+    'penetrance_platform.xxe',
+    'penetrance_platform.bot_net',
+    'penetrance_platform.base64_encoder_and_decoder',
+    'penetrance_platform.hash_generator',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'penetrance_platform.urls'
+ROOT_URLCONF = 'penetrance_platform.config.urls'
 
 TEMPLATES = [
     {
@@ -117,4 +125,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '../static/'

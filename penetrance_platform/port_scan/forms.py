@@ -24,6 +24,7 @@ class PortScanForm(forms.Form):
 
     @staticmethod
     def port_scan_form_validate(form):
+        host = form.get['host']
         start_port = form.get['start_port']
         last_port = form.get['last_port']
         scan_method = form.get['scan_method']
@@ -39,4 +40,7 @@ class PortScanForm(forms.Form):
             return False
 
         if scan_method > 9 or scan_method < 1:
+            return False
+
+        if len(host) > 2048 or host is None:
             return False

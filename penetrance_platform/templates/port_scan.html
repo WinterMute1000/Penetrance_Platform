@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div>
+    <form method = "POST" id="port_scan_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <input type="button" onclick="postPortScan()" value="Port Scan">
+</form>
+</div>
+<div margin="50px" background-color="#CCCCCC" id="port_scan_result">
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+function postPortScan(){
+    var portScanForm = $('#port_scan_form')
+    portScanInfo = new FormData(portScanForm)
+    $.ajax({
+        url:'/port_scan',
+        type: portScanForm.attr('method'),
+        contentType: 'multipart/form-data',
+        dataType: 'json',
+        data:portScanForm,
+        success: function(data) {
+            var result = JSON.parse(data);
+            $('port_scan_result').html(result);
+        },
+        error: function(xhr, ajaxOption, thrownError){
+            $('port_scan_result').html("Port scan error!");
+        }
+}
+{% endblock javascripts %}

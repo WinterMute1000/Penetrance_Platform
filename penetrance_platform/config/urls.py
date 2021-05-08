@@ -1,3 +1,5 @@
+from django.conf.urls import url
+from ..port_scan import views as port_scan_view
 """penetrance_platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,5 +19,14 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(
+        regex=r"^$",
+        view=port_scan_view.PortScanView.as_view(),
+        name="port_scan"
+    ),
+    url(
+        regex=r"^(port_scan)$",
+        view=port_scan_view.PortScanView.as_view(),
+        name="port_scan"
+    ),
 ]
