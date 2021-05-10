@@ -12,10 +12,9 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-path = os.path.abspath(__file__ + '/../..')
-
-if path not in sys.path:
-    sys.path.append(path)
+sys.path.append(os.path.abspath(__file__ + '/..'))
+sys.path.append(os.path.abspath(__file__ + '/../..'))
+sys.path.append(os.path.abspath(__file__ + '/../../..'))
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'penetrance_platform.config.settings')
 
