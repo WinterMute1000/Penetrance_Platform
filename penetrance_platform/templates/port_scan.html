@@ -21,11 +21,11 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 function postPortScan(){
-    var portScanForm = $('#port_scan_form')
+    var portScanForm = $('#port_scan_form');
     portScanInfo = new FormData(portScanForm)
     $.ajax({
         url:'/port_scan',
-        type: portScanForm.attr('method'),
+        type: 'POST',
         contentType: 'multipart/form-data',
         dataType: 'json',
         data:portScanForm,
@@ -36,5 +36,6 @@ function postPortScan(){
         error: function(xhr, ajaxOption, thrownError){
             $('port_scan_result').html("Port scan error!");
         }
+    });
 }
 {% endblock javascripts %}

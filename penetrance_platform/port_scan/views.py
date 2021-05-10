@@ -23,7 +23,7 @@ class PortScanView(CreateView):
             9: "-sN",
         }
 
-        super.__init__()
+        super(PortScanView, self).__init__()
 
     def get(self, request, *args, **kwargs):
         context = {'form': PortScanForm()}
@@ -37,9 +37,15 @@ class PortScanView(CreateView):
 
         if form.is_vaild() and PortScanForm.port_scan_form_validate():
             host = form['hosts']
-            # start_port = form['start_port']
-            # last_port = form['last_port']
-            ports = str(form['start_port']) + "-" + str(form['last_port'])
+            start_port = form['start_port']
+            last_port = form['last_port']
+
+            if start_port is None:
+                start_port = 0
+            if last_port is None:
+                last_port = 65535
+
+            ports = str(start_port) + "-" + str(last_port)
             scan_method = self.scan_method_dic[form['scan_method']]
             logging = form['logging']
 
