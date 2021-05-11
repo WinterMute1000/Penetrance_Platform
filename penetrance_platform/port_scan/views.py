@@ -43,7 +43,7 @@ class PortScanView(CreateView):
             if start_port is None:
                 start_port = 0
             if last_port is None:
-                last_port = 65535
+                last_port = 1024
 
             ports = str(start_port) + "-" + str(last_port)
             scan_method = self.scan_method_dic[form['scan_method']]

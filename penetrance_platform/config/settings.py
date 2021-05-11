@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'penetrance_platform.port_scan',
     'penetrance_platform.information_disclosure',
     'penetrance_platform.xss',

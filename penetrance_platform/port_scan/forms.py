@@ -20,7 +20,7 @@ class PortScanForm(forms.Form):
     last_port = forms.IntegerField(required=False, help_text="Input last port default:1024")
     scan_method = forms.ChoiceField(required=True, choices=SCAN_METHOD,
                                     help_text="Choice scanning method")
-    logging = forms.BooleanField(required=True, help_text="Check if you want logging.")
+    logging = forms.BooleanField(initial=False, required=False, help_text="Check if you want logging.")
 
     @staticmethod
     def port_scan_form_validate(form):
