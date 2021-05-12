@@ -1,15 +1,12 @@
 import nmap
-from penetrance_platform.static.singleton_instance import SingletonInstance
 
 
 # Port scanning class
 
-class PortScanClass(SingletonInstance):
-    __instance = None
+class PortScanClass:
     port_scanner = nmap.PortScanner()
 
     def scan(self, hosts, ports="0-65535", arg=""):
-
         if self.port_scanner is None:
             self.port_scanner = nmap.PortScanner()
         default_scan_arg = "-sV "
