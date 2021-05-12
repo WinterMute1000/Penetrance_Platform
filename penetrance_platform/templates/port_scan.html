@@ -8,23 +8,32 @@
 {% block content %}
 <script type="text/javascript">
     function postPortScan(){
-        var portScanForm = $('#port_scan_form');
-        portScanInfo = new FormData(portScanForm)
+        var portScanForm = new FormData($('#port_scan_form')[0]);
+        host = portScanForm.get('host');
+        first_port = portScanForm.get('first_port');
+        last_port = portScanForm.get('last_port');
+        scan_method = portScanForm.get('scan_method');
+        logging = portScanForm.get('logging');
+        csrf_token =
         $.ajax({
             url:'/port_scan',
             type: 'POST',
-            contentType: 'multipart/form-data',
-            dataType: 'json',
-            data:portScanForm,
-            success: function(data) {
-                var result = JSON.parse(data);
-                $('port_scan_result').html(result);
+            data:{
+                    'host':host,
+                    'first_port':first_port,
+                    'last_port':last_port,
+                    'scan_method':scan_method,
+                    'logging':logging
             },
-            error: function(xhr, ajaxOption, thrownError){
-                $('port_scan_result').html("Port scan error!");
-            }
-        });
-    }
+                success: function(data) {
+                    var result = JSON.parse(data);
+                    $('port_scan_result').html(result);
+                },
+                error: function(xhr, ajaxOption, thrownError){
+                    $('port_scan_result').html("Port scan error!");
+                }
+            });
+        }
 </script>
 <div>
     <form method = "POST" id="port_scan_form">

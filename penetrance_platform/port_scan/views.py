@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import CreateView
+from django.views.generic.edit import FormMixin
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from .forms import PortScanForm
@@ -10,6 +11,8 @@ from .models import PortScanLog
 # Create your views here.
 
 class PortScanView(CreateView):
+    form_class = PortScanForm
+
     def __init__(self):
         self.scan_method_dic = {
             1: "-sS",
@@ -32,10 +35,11 @@ class PortScanView(CreateView):
         return HttpResponse(port_scan_template.render(context, request))
 
     def post(self, request, *args, **kwargs):
-        port_scanner = PortScanClass.instance()
+        port_scanner = PortScanClass()
         form = self.form_class(request.POST)
+        print(form)
 
-        if form.is_vaild() and PortScanForm.port_scan_form_validate():
+        if form.is_valid():
             host = form['hosts']
             start_port = form['start_port']
             last_port = form['last_port']
