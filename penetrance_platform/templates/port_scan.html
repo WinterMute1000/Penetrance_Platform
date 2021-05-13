@@ -10,27 +10,26 @@
     function postPortScan(){
         var portScanForm = new FormData($('#port_scan_form')[0]);
         host = portScanForm.get('host');
-        first_port = portScanForm.get('first_port');
+        start_port = portScanForm.get('start_port');
         last_port = portScanForm.get('last_port');
         scan_method = portScanForm.get('scan_method');
         logging = portScanForm.get('logging');
-        csrf_token =
         $.ajax({
             url:'/port_scan',
             type: 'POST',
             data:{
                     'host':host,
-                    'first_port':first_port,
+                    'start_port':start_port,
                     'last_port':last_port,
                     'scan_method':scan_method,
                     'logging':logging
             },
                 success: function(data) {
-                    var result = JSON.parse(data);
-                    $('port_scan_result').html(result);
+                    result = JSON.parse(JSON.stringify(data)).result
+                    document.getElementById("port_scan_result").value=result;
                 },
                 error: function(xhr, ajaxOption, thrownError){
-                    $('port_scan_result').html("Port scan error!");
+                    document.getElementById("port_scan_result").value="Port scan error!";
                 }
             });
         }
@@ -41,7 +40,7 @@
         {{ form.as_p }}
     <input type="button" onclick="postPortScan()" value="Port Scan">
 </form>
-    <textarea readonly id="port_scan_result">
+    <textarea id="port_scan_result">
     </textarea>
 </div>
 {% endblock content %}

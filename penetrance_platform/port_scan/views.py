@@ -15,15 +15,15 @@ class PortScanView(CreateView):
 
     def __init__(self):
         self.scan_method_dic = {
-            1: "-sS",
-            2: "-sT",
-            3: "-sP",
-            4: "-sA",
-            5: "-sR",
-            6: "-sU",
-            7: "-sF",
-            8: "-sX",
-            9: "-sN",
+            '1': "-sS",
+            '2': "-sT",
+            '3': "-sP",
+            '4': "-sA",
+            '5': "-sR",
+            '6': "-sU",
+            '7': "-sF",
+            '8': "-sX",
+            '9': "-sN",
         }
 
         super(PortScanView, self).__init__()
@@ -40,18 +40,18 @@ class PortScanView(CreateView):
         print(form)
 
         if form.is_valid():
-            host = form['hosts']
-            start_port = form['start_port']
-            last_port = form['last_port']
+            host = form.data['host']
+            start_port = form.data['start_port']
+            last_port = form.data['last_port']
 
             if start_port is None:
-                start_port = 0
+                start_port = '0'
             if last_port is None:
-                last_port = 1024
+                last_port = '1024'
 
-            ports = str(start_port) + "-" + str(last_port)
-            scan_method = self.scan_method_dic[form['scan_method']]
-            logging = form['logging']
+            ports = start_port + "-" + last_port
+            scan_method = self.scan_method_dic[form.data['scan_method']]
+            logging = form.data['logging']
 
             result = port_scanner.scan(host, ports, scan_method)
             # logging logic
@@ -60,4 +60,6 @@ class PortScanView(CreateView):
                 port_scan_log = PortScanLog.objects.create(host=host, result=result)
                 port_scan_log.save()
 
-        return JsonResponse({'result': result}, json_dumps_params={'ensure_ascii': True})
+            return JsonResponse({'result': result}, json_dumps_params={'ensure_ascii': True})
+
+        return JsonResponse({'result': "Invalid parameter"}, json_dumps_params={'ensure_ascii': True})

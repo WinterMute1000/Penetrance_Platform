@@ -23,7 +23,6 @@ class PortScanClass:
                 result += 'Protocol : %s' % proto + "\n"
 
                 list_port = self.port_scanner[host][proto].keys()
-                list_port.sort()
                 for port in list_port:
                     result += 'port : %s    state : %s' % (port, self.port_scanner[host][proto][port]['state']) + "\n"
 

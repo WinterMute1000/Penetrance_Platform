@@ -24,18 +24,26 @@ class PortScanForm(forms.Form):
                                  widget=forms.CheckboxInput())
 
     def is_valid(self):
-        if self.start_port is None:
+        start_port = int(self.data['start_port']) if self.data['start_port'].isnumeric() else None
+        last_port = int(self.data['last_port']) if self.data['last_port'].isnumeric() else None
+        scan_method = int(self.data['scan_method'])
+        host = self.data['host']
+
+        if start_port is None:
             pass
-        elif self.start_port > 65535 or self.start_port < 0:
+        elif start_port > 65535 or start_port < 0:
             return False
 
-        if self.last_port is None:
-            pass
-        elif self.last_port > 65535 or self.last_port < 0 or self.last_port < self.start_port:
+        if last_port is None:
+            last_port = 1024
+
+        if last_port > 65535 or last_port < 0 or last_port < start_port:
             return False
 
-        if self.scan_method > 9 or self.scan_method < 1:
+        if scan_method > 9 or scan_method < 1:
             return False
 
-        if len(self.host) > 2048 or self.host is None:
+        if len(host) > 2048 or host is None:
             return False
+
+        return True
