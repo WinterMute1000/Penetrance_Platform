@@ -10,10 +10,4 @@ class InformationDisclosureLog(models.Model):
 
     objects = models.Manager()
 
-    def is_valid(self):
-        host = self.data['host']
 
-        if len(host) > 2048 or host is None:
-            return False
-
-        return True

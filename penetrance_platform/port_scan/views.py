@@ -37,7 +37,6 @@ class PortScanView(CreateView):
     def post(self, request, *args, **kwargs):
         port_scanner = PortScanClass()
         form = self.form_class(request.POST)
-        print(form)
 
         if form.is_valid():
             host = form.data['host']
