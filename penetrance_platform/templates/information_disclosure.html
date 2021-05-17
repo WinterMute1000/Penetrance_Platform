@@ -10,7 +10,7 @@
     function postInformationDisclosure(){
         var informationDisclosureForm = new FormData($('#information_disclosure_form')[0]);
         host = informationDisclosureForm.get('host');
-        logging = portScanForm.get('logging');
+        logging = informationDisclosureForm.get('logging');
         $.ajax({
             url:'/information_disclosure',
             type: 'POST',
@@ -29,7 +29,7 @@
         }
 </script>
 <div>
-    <form method = "POST" id="information_disclosure_form_form">
+    <form method = "POST" id="information_disclosure_form">
         {% csrf_token %}
         {{ form.as_p }}
     <input type="button" onclick="postInformationDisclosure()" value="Port Scan">
