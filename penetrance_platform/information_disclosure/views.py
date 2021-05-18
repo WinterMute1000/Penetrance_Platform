@@ -1,6 +1,6 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.views.generic import CreateView
-from django.views.generic.edit import FormMixin
+# from django.views.generic.edit import FormMixin
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from .forms import InformationDisclosureForm
