@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<script type="text/javascript">
+    function postXSSTest(){
+        var xssTestForm = new FormData($('#xss_test_form')[0]);
+        host = xssTestForm.get('host');
+        param_name = xssTestForm.get('param_name');
+        method = xssTestForm.get('method');
+        logging = informationDisclosureForm.get('logging');
+        $.ajax({
+            url:'/information_disclosure',
+            type: 'POST',
+            data:{
+                    'host':host,
+                    'param_name':param_name,
+                    'method':method,
+                    'logging':logging
+            },
+                success: function(data) {
+                    result = JSON.parse(JSON.stringify(data)).result
+                    document.getElementById("xss_test_result").value=result;
+                },
+                error: function(xhr, ajaxOption, thrownError){
+                    document.getElementById("xss_test_result").value="xss test error!";
+                }
+            });
+        }
+</script>
+<div>
+    <form method = "POST" id="xss_test_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <input type="button" onclick="postXSSTest()" value="XSS Test">
+</form>
+    <textarea id="xss_test_result">
+    </textarea>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

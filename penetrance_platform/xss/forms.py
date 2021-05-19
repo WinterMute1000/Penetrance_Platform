@@ -12,14 +12,14 @@ class XSSForm(forms.Form):
     def is_valid(self):
         host = self.data['host']
         param_name = self.data['param_name']
-        method_name = self.data['method_name']
+        method = self.data['method']
 
         if len(host) > 2048 or host is None:
             return False
 
         if param_name is None:
             return False
-        if method_name is None:
+        if method is None:
             return False
 
         return True

@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from ..port_scan import views as port_scan_view
 from ..information_disclosure import views as information_disclosure_view
+from ..xss import views as xss_view
 """penetrance_platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -34,5 +35,10 @@ urlpatterns = [
         regex=r"^(information_disclosure)$",
         view=information_disclosure_view.InformationDisclosureView.as_view(),
         name="information_disclosure"
+    ),
+    url(
+        regex=r"^(xss)$",
+        view=xss_view.XSSView.as_view(),
+        name="XSS"
     ),
 ]
