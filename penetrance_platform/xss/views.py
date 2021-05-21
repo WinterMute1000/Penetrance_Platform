@@ -16,8 +16,8 @@ class XSSView(CreateView):
     def get(self, request, *args, **kwargs):
         context = {'form': XSSForm()}
 
-        information_disclosure_template = loader.get_template('information_disclosure.html')
-        return HttpResponse(information_disclosure_template.render(context, request))
+        xss_template = loader.get_template('xss.html')
+        return HttpResponse(xss_template.render(context, request))
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)

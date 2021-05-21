@@ -12,9 +12,9 @@
         host = xssTestForm.get('host');
         param_name = xssTestForm.get('param_name');
         method = xssTestForm.get('method');
-        logging = informationDisclosureForm.get('logging');
+        logging = xssTestForm.get('logging');
         $.ajax({
-            url:'/information_disclosure',
+            url:'/xss',
             type: 'POST',
             data:{
                     'host':host,

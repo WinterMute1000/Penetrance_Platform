@@ -1,7 +1,8 @@
 import threading
 from ..models import XSSCode
-import urllib.parse
+from urllib.parse import urlparse
 import urllib.request
+from urllib.error import URLError
 import concurrent.futures
 
 
@@ -31,19 +32,23 @@ class XSSTestModuleClass:
                                        else None))
 
         for request_tuple in request_tuple_list:
-            xss_test_result = urllib.request.urlopen(url=request_tuple[0], data=request_tuple[1])
 
-            if XSSTestModuleClass.DEFAULT_XSS_CHECK_STRING in xss_test_result.body or \
-                    XSSTestModuleClass.IMAGE_BASE_XSS_CHECK_STRING in xss_test_result.body:
-                result_list.append(request_tuple[0] if self.request_method == 'GET' else request_tuple[1])
+            try:
+                xss_test_result = urllib.request.urlopen(url=request_tuple[0], data=request_tuple[1])
+
+                if XSSTestModuleClass.DEFAULT_XSS_CHECK_STRING in xss_test_result.body or \
+                        XSSTestModuleClass.IMAGE_BASE_XSS_CHECK_STRING in xss_test_result.body:
+                    result_list.append(request_tuple[0] if self.request_method == 'GET' else request_tuple[1])
+
+            except URLError:
+                return "URL Error occurred. Please check URL or parameter."
 
         return "Possible XSS Code: " + ''.join(result_list) if len(result_list) > 0 \
             else "Not detect XSS."
 
     def xss_test(self):
         with concurrent.futures.ThreadPoolExecutor() as xss_test_executor:
-            xss_test_thread = xss_test_executor.submit(self.xss_test_thread_function, self)
+            xss_test_thread = xss_test_executor.submit(self.xss_test_thread_function)
             xss_test_result = xss_test_thread.result()
 
         return xss_test_result
-

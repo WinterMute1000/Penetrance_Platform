@@ -39,6 +39,6 @@ urlpatterns = [
     url(
         regex=r"^(xss)$",
         view=xss_view.XSSView.as_view(),
-        name="XSS"
+        name="xss"
     ),
 ]

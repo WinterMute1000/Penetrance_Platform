@@ -32,7 +32,7 @@
     <form method = "POST" id="information_disclosure_form">
         {% csrf_token %}
         {{ form.as_p }}
-    <input type="button" onclick="postInformationDisclosure()" value="Port Scan">
+    <input type="button" onclick="postInformationDisclosure()" value="Scan">
 </form>
     <textarea id="information_disclosure_result">
     </textarea>
