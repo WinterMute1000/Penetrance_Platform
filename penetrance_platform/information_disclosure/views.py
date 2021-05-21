@@ -26,7 +26,7 @@ class InformationDisclosureView(CreateView):
             host = form.data['host']
             logging = form.data['logging']
 
-            if "http" not in host or "https" not in host:
+            if "http" not in host and "https" not in host:
                 host = "http://" + host
 
             host_headers = urllib.request.urlopen(url=host).info()

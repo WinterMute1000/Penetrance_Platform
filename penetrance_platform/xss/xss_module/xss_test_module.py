@@ -1,6 +1,6 @@
 import threading
 from ..models import XSSCode
-from urllib.parse import urlparse
+from urllib import parse
 import urllib.request
 from urllib.error import URLError
 import concurrent.futures
@@ -12,7 +12,7 @@ class XSSTestModuleClass:
 
     def __init__(self, host, param_name, request_method='GET'):
         super().__init__()
-        if "http" not in host or "https" not in host:
+        if "http" not in host and "https" not in host:
             host = "http://" + host
 
         self.host = host
@@ -26,18 +26,17 @@ class XSSTestModuleClass:
         result_list = []
 
         for xss_object in XSSCode.objects.all():
-            request_tuple_list.append((self.host + '?' + self.param_name + '='
+            request_tuple_list.append((self.host + ('?' if '?' not in self.host else '&') + self.param_name + '='
                                        + xss_object.xss_code if self.request_method == 'GET' else self.host,
-                                       {self.param_name: xss_object.xss_code} if self.request_method != 'GET'
-                                       else None))
+                                       parse.urlencode({self.param_name: xss_object.xss_code})
+                                       .encode('utf-8') if self.request_method != 'GET' else None))
 
         for request_tuple in request_tuple_list:
-
             try:
-                xss_test_result = urllib.request.urlopen(url=request_tuple[0], data=request_tuple[1])
-
-                if XSSTestModuleClass.DEFAULT_XSS_CHECK_STRING in xss_test_result.body or \
-                        XSSTestModuleClass.IMAGE_BASE_XSS_CHECK_STRING in xss_test_result.body:
+                xss_test_result = str(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20"),
+                                                             data=request_tuple[1]).read())
+                if XSSTestModuleClass.DEFAULT_XSS_CHECK_STRING in xss_test_result or \
+                        XSSTestModuleClass.IMAGE_BASE_XSS_CHECK_STRING in xss_test_result:
                     result_list.append(request_tuple[0] if self.request_method == 'GET' else request_tuple[1])
 
             except URLError:
