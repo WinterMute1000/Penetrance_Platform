@@ -10,7 +10,7 @@ from .sql_injection_module.sql_injection_test_module import SQLInjectionTestModu
 
 # Create your views here.
 
-class XSSView(CreateView):
+class SQLInjectionView(CreateView):
     form_class = SQLInjectionForm
 
     def get(self, request, *args, **kwargs):

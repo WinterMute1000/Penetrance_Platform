@@ -2,6 +2,7 @@ from django.conf.urls import url
 from ..port_scan import views as port_scan_view
 from ..information_disclosure import views as information_disclosure_view
 from ..xss import views as xss_view
+from ..sql_injection import views as sql_injection_view
 """penetrance_platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -40,5 +41,10 @@ urlpatterns = [
         regex=r"^(xss)$",
         view=xss_view.XSSView.as_view(),
         name="xss"
+    ),
+    url(
+        regex=r"^(sql_injection)$",
+        view=sql_injection_view.SQLInjectionView.as_view(),
+        name="sql_injection"
     ),
 ]
