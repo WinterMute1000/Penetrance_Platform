@@ -1,4 +1,3 @@
-import threading
 from ..models import XSSCode
 from urllib import parse
 import urllib.request
