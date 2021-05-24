@@ -7,14 +7,14 @@
 
 {% block content %}
 <script type="text/javascript">
-    function postXSSTest(){
-        var xssTestForm = new FormData($('#xss_test_form')[0]);
-        host = xssTestForm.get('host');
-        param_name = xssTestForm.get('param_name');
-        method = xssTestForm.get('method');
-        logging = xssTestForm.get('logging');
+    function postSQLInjectionTest(){
+        var sqlInjectionTestForm = new FormData($('#sql_injection_test_form')[0]);
+        host = sqlInjectionTestForm.get('host');
+        param_name = sqlInjectionTestForm.get('param_name');
+        method = sqlInjectionTestForm.get('method');
+        logging = sqlInjectionTestForm.get('logging');
         $.ajax({
-            url:'/xss',
+            url:'/sql_injection',
             type: 'POST',
             data:{
                     'host':host,
@@ -24,22 +24,22 @@
             },
                 success: function(data) {
                     result = JSON.parse(JSON.stringify(data)).result
-                    document.getElementById("xss_test_result").value=result;
+                    document.getElementById("sql_injection_test_result").value=result;
                 },
                 error: function(xhr, ajaxOption, thrownError){
-                    document.getElementById("xss_test_result").value="xss test error!";
+                    document.getElementById("sql_injection_test_result").value="xss test error!";
                 }
             });
         }
 </script>
-<p>XSS Test</p>
+<p>SQL Injection Test (Blind SQL Injection Base)</p>
 <div>
-    <form method = "POST" id="xss_test_form">
+    <form method = "POST" id="sql_injection_test_form">
         {% csrf_token %}
         {{ form.as_p }}
-    <input type="button" onclick="postXSSTest()" value="XSS Test">
+    <input type="button" onclick="postSQLInjectionTest()" value="SQL Injection Test">
 </form>
-    <textarea id="xss_test_result">
+    <textarea id="sql_injection_test_result">
     </textarea>
 </div>
 {% endblock content %}
