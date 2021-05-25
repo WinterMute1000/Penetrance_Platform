@@ -27,29 +27,33 @@ class SQLInjectionTestModuleClass:
             if self.request_method == 'GET':
                 base_url = self.host + ('?' if '?' not in self.host else '&') + self.param_name + '='
                 for sql_injection_object in SQLInjectionCode.objects.all():
-                    request_tuple_list.append((base_url+sql_injection_object.sql_true_code,
-                                               base_url+sql_injection_object.sql_false_code))
+                    request_tuple_list.append((base_url + sql_injection_object.sql_true_code,
+                                               base_url + sql_injection_object.sql_false_code))
 
                 for request_tuple in request_tuple_list:
                     true_response_length = len(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20")).read())
                     false_response_length = len(urllib.request.urlopen(url=request_tuple[1].replace(" ", "%20")).read())
 
                     if true_response_length == false_response_length:
-                        result_list.append(request_tuple[0]+'\n'+request_tuple[1]+'\n\n')
+                        result_list.append(request_tuple[0] + '\n' + request_tuple[1] + '\n\n')
 
-        # method == 'POST'
-        # tuple [0] = true data, tuple[1] = false_data
+            # method == 'POST'
+            # tuple [0] = true data, tuple[1] = false_data
             else:
                 for sql_injection_object in SQLInjectionCode.objects.all():
-                    request_tuple_list.append((parse.urlencode({self.param_name: sql_injection_object.sql_true_code}),
-                                               parse.urlencode({self.param_name: sql_injection_object.sql_true_code})))
+                    request_tuple_list.append((parse.urlencode({self.param_name: sql_injection_object.sql_true_code})
+                                               .encode('utf-8'),
+                                               parse.urlencode({self.param_name: sql_injection_object.sql_true_code})
+                                               .encode('utf-8')
+                                               ))
 
                 for request_tuple in request_tuple_list:
                     true_response_length = len(urllib.request.urlopen(url=self.host, data=request_tuple[0]).read())
                     false_response_length = len(urllib.request.urlopen(url=self.host, data=request_tuple[1]).read())
 
                     if true_response_length == false_response_length:
-                        result_list.append(request_tuple[0] + '\n' + request_tuple[1] + '\n\n')
+                        result_list.append(str(request_tuple[0]).replace('b\'', '')
+                                           + '\n' + str(request_tuple[1]).replace('b\'', '') + '\n\n')
 
         except URLError:
             return "URL Error occurred. Please check URL or parameter."
