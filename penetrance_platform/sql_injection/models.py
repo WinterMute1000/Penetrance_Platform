@@ -10,7 +10,7 @@ class SQLInjectionCode(models.Model):
     objects = models.Manager()
 
 
-# XSS Scan result model
+# SQL Injection scan result model
 class SQLInjectionLog(models.Model):
     host = models.CharField(max_length=2048)
     scan_date = models.DateTimeField(auto_now=True)

@@ -15,7 +15,7 @@ class SQLInjectionTestModuleClass:
         self.param_name = param_name
         self.request_method = request_method
 
-    # XSS request thread. only use xss module.
+    # SQL Injection request thread. only use SQL Injection module.
     def sql_injection_test_thread_function(self):
         # tuple [0] = request url(true),tuple[1] = request url(false)
         request_tuple_list = []
