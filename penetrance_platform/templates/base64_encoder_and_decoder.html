@@ -1,0 +1,46 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<script type="text/javascript">
+    function postBase64EncoderAndDecoder(){
+        var Base64EncoderAndDecoderForm = new FormData($('#base64_encoder_and_decoder_form')[0]);
+        target_str = Base64EncoderAndDecoderForm.get('target_str');
+        encode_or_decode = Base64EncoderAndDecoderForm.get('encode_or_decode');
+
+        $.ajax({
+            url:'/base64_encoder_and_decoder',
+            type: 'POST',
+            data:{
+                    'target_str':target_str,
+                    'encode_or_decode':encode_or_decode,
+            },
+                success: function(data) {
+                    result = JSON.parse(JSON.stringify(data)).result
+                    document.getElementById("base64_encode_and_decode_result").value=result;
+                },
+                error: function(xhr, ajaxOption, thrownError){
+                    document.getElementById("base64_encode_and_decode_result").value="Base64 encode/decode error!";
+                }
+            });
+        }
+</script>
+<p>Base64 Encoder/Decoder</p>
+<div>
+    <form method = "POST" id="base64_encoder_and_decoder_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <input type="button" onclick="postBase64EncoderAndDecoder()" value="Encode/Decode">
+</form>
+    <textarea id="base64_encode_and_decode_result">
+    </textarea>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

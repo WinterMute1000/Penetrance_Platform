@@ -4,6 +4,7 @@ from ..information_disclosure import views as information_disclosure_view
 from ..xss import views as xss_view
 from ..sql_injection import views as sql_injection_view
 from ..xxe import views as xxe_view
+from ..base64_encoder_and_decoder import views as base64_encode_and_decoder_view
 """penetrance_platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -52,5 +53,12 @@ urlpatterns = [
         regex=r"^(xxe)$",
         view=xxe_view.XXEView.as_view(),
         name="xxe"
+    ),
+    url(
+
+        regex=r"^(base64_encoder_and_decoder)$",
+        view=base64_encode_and_decoder_view.Base64EncoderAndDecoderView.as_view(),
+        name="base64_encoder_and_decoder"
+
     ),
 ]
