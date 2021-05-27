@@ -31,7 +31,7 @@ class XXETestModuleClass:
 
         for request_tuple in request_tuple_list:
             try:
-                xxe_test_result = str(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20"),
+                xxe_test_result = str(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20").replace("\n", ""),
                                                              data=request_tuple[1]).read())
                 if XXETestModuleClass.DEFAULT_XXE_CHECK_STRING in xxe_test_result:
                     result_list.append(request_tuple[0] if self.request_method == 'GET' else request_tuple[1])

@@ -3,6 +3,7 @@ from ..port_scan import views as port_scan_view
 from ..information_disclosure import views as information_disclosure_view
 from ..xss import views as xss_view
 from ..sql_injection import views as sql_injection_view
+from ..xxe import views as xxe_view
 """penetrance_platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -46,5 +47,10 @@ urlpatterns = [
         regex=r"^(sql_injection)$",
         view=sql_injection_view.SQLInjectionView.as_view(),
         name="sql_injection"
+    ),
+    url(
+        regex=r"^(xxe)$",
+        view=xxe_view.XXEView.as_view(),
+        name="xxe"
     ),
 ]
