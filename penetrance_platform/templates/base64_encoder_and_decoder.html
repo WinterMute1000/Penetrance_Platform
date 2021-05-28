@@ -8,9 +8,9 @@
 {% block content %}
 <script type="text/javascript">
     function postBase64EncoderAndDecoder(){
-        var Base64EncoderAndDecoderForm = new FormData($('#base64_encoder_and_decoder_form')[0]);
-        target_str = Base64EncoderAndDecoderForm.get('target_str');
-        encode_or_decode = Base64EncoderAndDecoderForm.get('encode_or_decode');
+        var base64EncoderAndDecoderForm = new FormData($('#base64_encoder_and_decoder_form')[0]);
+        target_str = base64EncoderAndDecoderForm.get('target_str');
+        encode_or_decode = base64EncoderAndDecoderForm.get('encode_or_decode');
 
         $.ajax({
             url:'/base64_encoder_and_decoder',

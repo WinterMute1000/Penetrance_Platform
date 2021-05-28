@@ -5,6 +5,7 @@ from ..xss import views as xss_view
 from ..sql_injection import views as sql_injection_view
 from ..xxe import views as xxe_view
 from ..base64_encoder_and_decoder import views as base64_encode_and_decoder_view
+from ..hash_generator import views as hash_generator_view
 """penetrance_platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -60,5 +61,10 @@ urlpatterns = [
         view=base64_encode_and_decoder_view.Base64EncoderAndDecoderView.as_view(),
         name="base64_encoder_and_decoder"
 
+    ),
+    url(
+        regex=r"^(hash_generator)$",
+        view=hash_generator_view.HashGeneratorView.as_view(),
+        name="hash_generator"
     ),
 ]

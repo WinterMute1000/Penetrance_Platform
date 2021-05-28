@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<script type="text/javascript">
+    function postHashGenerator(){
+        var hashGeneratorForm = new FormData($('#hash_generator_form')[0]);
+        target_str = hashGeneratorForm.get('target_str');
+        hash_choice = hashGeneratorForm.get('hash_choice');
+        encrypt_or_decrypt = hashGeneratorForm.get('encrypt_or_decrypt');
+
+        $.ajax({
+            url:'/hash_generator',
+            type: 'POST',
+            data:{
+                    'target_str':target_str,
+                    'hash_choice':hash_choice
+                    'encrypt_or_decrypt':encrypt_or_decrypt,
+            },
+                success: function(data) {
+                    result = JSON.parse(JSON.stringify(data)).result
+                    document.getElementById("hash_generator_result").value=result;
+                },
+                error: function(xhr, ajaxOption, thrownError){
+                    document.getElementById("hash_generator_result").value="Hash Generator error!";
+                }
+            });
+        }
+</script>
+<p>Hash Generator</p>
+<p>Can Encrypt/Decrypt</p>
+<div>
+    <form method = "POST" id="hash_generator_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <input type="button" onclick="postHashGenerator()" value="Encrypt/Decrypt">
+</form>
+    <textarea id="hash_generator_result">
+    </textarea>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}
