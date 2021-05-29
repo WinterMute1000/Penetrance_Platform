@@ -4,18 +4,18 @@ from django.views.generic import CreateView
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from .forms import HashGeneratorForm
-from hash_generator_module.hash_generator_class import HashGeneratorClass
+from .hash_generator_module.hash_generator_class import HashGeneratorClass
 
 
 # Create your views here.
 
 class HashGeneratorView(CreateView):
     form_class = HashGeneratorForm
-    # key = hash algorithm, value[0]=encrypt, value[1]=decrypt
-    hash_function_dict = {'MD5': (HashGeneratorClass.md5_encrypt, HashGeneratorClass.md5_decrypt),
-                          'SHA1': (HashGeneratorClass.sha1_encrypt, HashGeneratorClass.sha1_decrypt),
-                          'SHA256': (HashGeneratorClass.sha256_encrypt, HashGeneratorClass.sha256_decrypt),
-                          'SHA512': (HashGeneratorClass.sha512_encrypt, HashGeneratorClass.sha512_decrypt)}
+    # key = hash algorithm, value =encrypt
+    hash_function_dict = {'MD5': HashGeneratorClass.md5_encrypt,
+                          'SHA1': HashGeneratorClass.sha1_encrypt,
+                          'SHA256': HashGeneratorClass.sha256_encrypt,
+                          'SHA512': HashGeneratorClass.sha512_encrypt}
 
     def get(self, request, *args, **kwargs):
         context = {'form': HashGeneratorForm()}
@@ -29,10 +29,8 @@ class HashGeneratorView(CreateView):
         if form.is_valid():
             target_str = form.data['target_str']
             hash_choice = str(form.data['hash_choice'])
-            encrypt_or_decrypt = str(form.data['encrypt_or_decrypt'])
 
-            result = self.hash_function_dict[hash_choice][0](target_str) if encrypt_or_decrypt == 'Encrypt' \
-                else self.hash_function_dict[hash_choice][1](target_str)
+            result = self.hash_function_dict[hash_choice](target_str)
 
             return JsonResponse({'result': result}, json_dumps_params={'ensure_ascii': True})
 

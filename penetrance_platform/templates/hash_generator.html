@@ -11,15 +11,13 @@
         var hashGeneratorForm = new FormData($('#hash_generator_form')[0]);
         target_str = hashGeneratorForm.get('target_str');
         hash_choice = hashGeneratorForm.get('hash_choice');
-        encrypt_or_decrypt = hashGeneratorForm.get('encrypt_or_decrypt');
 
         $.ajax({
             url:'/hash_generator',
             type: 'POST',
             data:{
                     'target_str':target_str,
-                    'hash_choice':hash_choice
-                    'encrypt_or_decrypt':encrypt_or_decrypt,
+                    'hash_choice':hash_choice,
             },
                 success: function(data) {
                     result = JSON.parse(JSON.stringify(data)).result
