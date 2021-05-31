@@ -19,34 +19,38 @@ class XSSTestModuleClass:
         self.request_method = request_method
 
     # XSS request thread. only use xss module.
-    def xss_test_thread_function(self):
+    def xss_test_thread_function(self, xss_object):
         # tuple [0] = request url, tuple [1] = data
-        request_tuple_list = []
-        result_list = []
+        request_tuple = ()
 
-        for xss_object in XSSCode.objects.all():
-            request_tuple_list.append((self.host + ('?' if '?' not in self.host else '&') + self.param_name + '='
-                                       + xss_object.xss_code if self.request_method == 'GET' else self.host,
-                                       parse.urlencode({self.param_name: xss_object.xss_code})
-                                       .encode('utf-8') if self.request_method != 'GET' else None))
+        request_tuple = (self.host + ('?' if '?' not in self.host else '&') + self.param_name + '='
+                         + xss_object.xss_code if self.request_method == 'GET' else self.host,
+                         parse.urlencode({self.param_name: xss_object.xss_code})
+                         .encode('utf-8') if self.request_method != 'GET' else None)
 
-        for request_tuple in request_tuple_list:
-            try:
-                xss_test_result = str(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20"),
-                                                             data=request_tuple[1]).read())
-                if XSSTestModuleClass.DEFAULT_XSS_CHECK_STRING in xss_test_result or \
-                        XSSTestModuleClass.IMAGE_BASE_XSS_CHECK_STRING in xss_test_result:
-                    result_list.append(request_tuple[0] if self.request_method == 'GET' else request_tuple[1])
+        try:
+            xss_test_result = str(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20"),
+                                                         data=request_tuple[1]).read())
+            if XSSTestModuleClass.DEFAULT_XSS_CHECK_STRING in xss_test_result or \
+                    XSSTestModuleClass.IMAGE_BASE_XSS_CHECK_STRING in xss_test_result:
+                return request_tuple[0] if self.request_method == 'GET' else request_tuple[1]
 
-            except URLError:
-                return "URL Error occurred. Please check URL or parameter."
+        except URLError:
+            return "URL Error occurred. Please check URL or parameter."
 
-        return "Possible XSS Code: " + ''.join(result_list) if len(result_list) > 0 \
-            else "Not detect XSS."
+        return ''
 
     def xss_test(self):
-        with concurrent.futures.ThreadPoolExecutor() as xss_test_executor:
-            xss_test_thread = xss_test_executor.submit(self.xss_test_thread_function)
-            xss_test_result = xss_test_thread.result()
+        xss_test_result = []
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as xss_test_executor:
+            xss_test_threads = [xss_test_executor.submit(self.xss_test_thread_function,xss_object)
+                                for xss_object in XSSCode.objects.all()]
 
-        return xss_test_result
+            for xss_test_thread in concurrent.futures.as_completed(xss_test_threads):
+                xss_test_thread_result = xss_test_thread.result()
+
+                if len(xss_test_thread_result) > 0:
+                    xss_test_result.append(xss_test_thread_result)
+
+        return "Possible XSS code: " + ''.join(xss_test_result) \
+            if len(xss_test_thread_result) > 0 else "Not detect XSS."

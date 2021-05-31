@@ -40,5 +40,18 @@
 <!-- Volt JS -->
 <script src="/static/assets/js/volt.js"></script>
 
+<!-- ETC -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="/static/safe_csrf.js"></script>
+<script src="/static/assets/js/safe-csrf.js"></script>
+<script src="/static/assets/js/loading.js"></script>
+
+<script>
+$(document).ready(function(){
+})
+.ajaxStart(function(){
+	showLoading() //ajax실행시 로딩바를 보여준다.
+})
+.ajaxStop(function(){
+	closeLoading() //ajax종료시 로딩바를 숨겨준다.
+});
+</script>
