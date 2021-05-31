@@ -35,9 +35,9 @@ class PortScanForm(forms.Form):
             return False
 
         if last_port is None:
-            pass
+            last_port = 1024
 
-        elif last_port > 65535 or last_port < 0 or last_port < start_port:
+        if last_port > 65535 or last_port < 0 or last_port < start_port:
             return False
 
         if scan_method > 9 or scan_method < 1:
