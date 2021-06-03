@@ -11,7 +11,7 @@ class PortScanClass:
             self.port_scanner = nmap.PortScanner()
         default_scan_arg = "-sV "
         scan_arg = default_scan_arg + arg
-        self.port_scanner.scan(hosts=hosts, ports=ports, arguments=scan_arg)
+        self.port_scanner.scan(hosts=hosts, ports=ports, arguments=scan_arg,sudo=True)
 
         result = ""
         for host in self.port_scanner.all_hosts():
