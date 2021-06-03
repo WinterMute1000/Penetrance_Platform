@@ -38,7 +38,7 @@ class InformationDisclosureView(CreateView):
             if "X-Powered-By" in host_headers.keys():
                 x_powered_by = str(host_headers['X-Powered-By'])
 
-            result = version_info + "\n" + x_powered_by
+            result = "Server: "+version_info + "\n" + "X-Powered-By"+x_powered_by
 
             if logging:
                 information_disclosure_log = InformationDisclosureLog.objects.create(host=host,
