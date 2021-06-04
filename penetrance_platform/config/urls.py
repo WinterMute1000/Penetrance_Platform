@@ -1,4 +1,5 @@
-from django.conf.urls import url
+from django.conf.urls import url,include
+from django.contrib import admin
 from ..port_scan import views as port_scan_view
 from ..information_disclosure import views as information_disclosure_view
 from ..xss import views as xss_view
@@ -73,4 +74,5 @@ urlpatterns = [
         view=file_upload_web_shells_view.FileUploadWebShellsView.as_view(),
         name="file_upload_web_shells"
     ),
+    url(r'^admin/',admin.site.urls)
 ]
