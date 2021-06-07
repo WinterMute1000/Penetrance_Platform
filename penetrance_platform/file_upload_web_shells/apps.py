@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class FileUploadWebShellsConfig(AppConfig):
-    name = 'file_upload_web_shells'
+    name = 'penetrance_platform.file_upload_web_shells'

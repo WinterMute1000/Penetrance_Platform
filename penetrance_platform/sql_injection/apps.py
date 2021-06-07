@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class SqlInjectionConfig(AppConfig):
-    name = 'sql_injection'
+    name = 'penetrance_platform.sql_injection'
