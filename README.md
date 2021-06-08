@@ -37,7 +37,8 @@
         # However, you must set it for any further virtual host explicitly.
         #ServerName www.example.com
         
-        WSGIDaemonProcess server name python-path=/usr/lib/python3/dist-packages (If your python path is different paths, change this value)
+        WSGIDaemonProcess server name python-path=/usr/lib/python3/dist-packages 
+        (If your python path is different paths, change this value)
         WSGIProcessGroup server name
         WSGIScriptAlias / <BASE_DIR>/penetrance_platform/penetrance_platform/config/wsgi.py process-group=server name
         Alias /static <BASE_DIR>/penetrance_platform/penetrance_platform/static
