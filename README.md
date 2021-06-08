@@ -61,9 +61,11 @@
     </VirtualHost>
 
  <BASE_DIR>는 이거 clone한 디렉토리로 하면 됩니다. server name은 아무거나 해주세요!
+ 
  <BASE_DIR> is directory which is cloned project. server name is whatever you want !
  
  그리고 apache2 서비스를 실행하고 loopback 주소의 8000번 포트로 접속하시면 됩니다. 참 쉽죠?
+ 
  And run the apache2 service and access port 8000 of the loopback address. Isn't it easy?
  
  
