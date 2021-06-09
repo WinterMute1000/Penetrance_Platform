@@ -93,6 +93,9 @@
    3. SQL, XSS,XXE 정확도 향상(확인 코드 추가)
    4. 봇 넷 개발 또는 그냥 안 하기!
 
+
+
+
    1. Front end overall part
    2. Port Scanning Rate
    3. Improve SQL, XSS, and XXE accuracy (add more verification code)
