@@ -50,56 +50,41 @@
  1. 기능
 
   1.1 포트 스캔(Port Scan)
-  python-nmap 기반으로 스캐닝 합니다. 여러 스캔 방법을 지원합니다.
-  
-  Scanning based python-nmap. Supports various scanning methods.
+      python-nmap 기반으로 스캐닝 합니다. 여러 스캔 방법을 지원합니다.
+      Scanning based python-nmap. Supports various scanning methods.
   
   1.2 정보 누출(Information Disclosure)
-  거창하게 정보 누출이라고 했지만 사실 Header에 서버 정보나 X-Powered-By를 확인하는 것 뿐입니다.
-  
-  It's Information Disclosure. But actually just checking Server and X-Powered-By in header.
+     거창하게 정보 누출이라고 했지만 사실 Header에 서버 정보나 X-Powered-By를 확인하는 것 뿐입니다.
+     It's Information Disclosure. But actually just checking Server and X-Powered-By in header.
   
   1.3 SQL Injection
-  Blind SQL Injection 기반으로 체크합니다.
-  
-  Check vulnerability by blind SQL Injection code.
+      Blind SQL Injection 기반으로 체크합니다.
+      Check vulnerability by blind SQL Injection code.
   
   1.4 XSS
-  XSS 취약점이 존재하는 지 체크합니다.
-  
-  Check whether have XSS vulnerability.
+      XSS 취약점이 존재하는 지 체크합니다.
+      Check whether have XSS vulnerability.
   
   1.5 XXE
-  XXE 취약점이 존재하는 지 체크합니다.
-  
-  Check whether have XXE vulnerability.
+      XXE 취약점이 존재하는 지 체크합니다.
+      Check whether have XXE vulnerability.
   
   1.6 Base64 Encoder/Decoder
   
   1.7 Hash generator
-  MD5, SHA1, SHA256, SHA512
+     MD5, SHA1, SHA256, SHA512 Support.
   
   1.8 File upload web shells
-  파일 업로드 취약점에 이용할 수 있는 웹 쉘 코드나 웹 쉘의 GitHub 주소를 보여줍니다.
-  
-  Show GitHub address of a web shell or web shell that can be exploited for a file upload vulnerability.
+    파일 업로드 취약점에 이용할 수 있는 웹 쉘 코드나 웹 쉘의 GitHub 주소를 보여줍니다.
+    Show GitHub address of a web shell or web shell that can be exploited for a file upload vulnerability.
   
 
 
 2. 아직 개선해야 할 점
-
-   1. 프론트엔드 전반적인 부분
-   2. 포트 스캔 속도
-   3. SQL, XSS,XXE 정확도 향상(확인 코드 추가)
-   4. 봇 넷 개발 또는 그냥 안 하기!
-
-
-
-
-   1. Front end overall part
-   2. Port Scanning Rate
-   3. Improve SQL, XSS, and XXE accuracy (add more verification code)
-   4. Develop a botnet or just don't do it!
+   1. 프론트엔드 전반적인 부분 (Front end overall part)
+   2. 포트 스캔 속도(Port Scanning Rate)
+   3. SQL, XSS,XXE 정확도 향상(확인 코드 추가) (Improve SQL, XSS, and XXE accuracy (add more verification code))
+   4. 봇 넷 개발 또는 그냥 안 하기! (Develop a botnet or just don't do it!)
 
 좀 거창하게 썼지만 사실 그냥 제가 편하게 모의해킹 프로젝트 시 쓸려고(+Django 연습할려고) 그냥 제 입맛에 맞게 편하게 만든 것 뿐 입니다.
 더 좋은 웹 취약점 툴들이 많으니 그걸 쓰는 것을 추천합니다. 솔직히 제가 만들었지만 별로 좋지 않은 것 같거든요. (특히 프론트)
