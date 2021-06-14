@@ -1,8 +1,8 @@
 from ..models import SQLInjectionCode
+from ...static.test_thread_module import thread_test
 from urllib import parse
 import urllib.request
 from urllib.error import URLError
-import concurrent.futures
 
 
 class SQLInjectionTestModuleClass:
@@ -31,7 +31,7 @@ class SQLInjectionTestModuleClass:
                 true_response_length = len(urllib.request.urlopen(url=request_tuple[0].replace(" ", "%20")).read())
                 false_response_length = len(urllib.request.urlopen(url=request_tuple[1].replace(" ", "%20")).read())
 
-                if true_response_length == false_response_length:
+                if true_response_length != false_response_length:
                     return request_tuple[0] + '\n' + request_tuple[1] + '\n\n'
                 else:
                     return ''
@@ -42,10 +42,10 @@ class SQLInjectionTestModuleClass:
                 request_tuple = (parse.urlencode({self.param_name: sql_injection_object.sql_true_code}).encode('utf-8'),
                                  parse.urlencode({self.param_name: sql_injection_object.sql_true_code}).encode('utf-8'))
 
-                true_response_length = len(urllib.request.urlopen(url=self.host, data=request_tuple[0]).read())
-                false_response_length = len(urllib.request.urlopen(url=self.host, data=request_tuple[1]).read())
+                true_response_length = urllib.request.urlopen(url=self.host, data=request_tuple[0]).read()
+                false_response_length = urllib.request.urlopen(url=self.host, data=request_tuple[1]).read()
 
-                if true_response_length == false_response_length:
+                if true_response_length != false_response_length:
                     return str(request_tuple[0]).replace('b\'', '') + '\n' + str(request_tuple[1]).replace('b\'', '') \
                            + '\n\n'
                 else:
@@ -55,17 +55,9 @@ class SQLInjectionTestModuleClass:
             return "URL Error occurred. Please check URL or parameter."
 
     def sql_injection_test(self):
-        sql_injection_test_result = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as sql_injection_test_executor:
-            sql_injection_test_threads = [sql_injection_test_executor.submit(self.sql_injection_test_thread_function,
-                                                                             sql_injection_object)
-                                          for sql_injection_object in SQLInjectionCode.objects.all()]
 
-            for sql_injection_test_thread in concurrent.futures.as_completed(sql_injection_test_threads):
-                sql_injection_test_thread_result = sql_injection_test_thread.result()
-
-                if len(sql_injection_test_thread_result) > 0:
-                    sql_injection_test_result.append(sql_injection_test_thread_result)
+        sql_injection_test_result = thread_test(self.sql_injection_test_thread_function,
+                                                SQLInjectionCode.objects.all())
 
         return "Possible SQL Injection code: " + ''.join(sql_injection_test_result) \
             if len(sql_injection_test_result) > 0 else "Not detect SQL Injection."
