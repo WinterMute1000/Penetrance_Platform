@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class XxeConfig(AppConfig):
+class XXEConfig(AppConfig):
     name = 'penetrance_platform.xxe'

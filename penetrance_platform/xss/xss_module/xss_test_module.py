@@ -2,7 +2,7 @@ from ..models import XSSCode
 from urllib import parse
 import urllib.request
 from urllib.error import URLError
-import concurrent.futures
+from ...static.test_thread_module import thread_test
 
 
 class XSSTestModuleClass:
@@ -41,16 +41,7 @@ class XSSTestModuleClass:
         return ''
 
     def xss_test(self):
-        xss_test_result = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as xss_test_executor:
-            xss_test_threads = [xss_test_executor.submit(self.xss_test_thread_function,xss_object)
-                                for xss_object in XSSCode.objects.all()]
-
-            for xss_test_thread in concurrent.futures.as_completed(xss_test_threads):
-                xss_test_thread_result = xss_test_thread.result()
-
-                if len(xss_test_thread_result) > 0:
-                    xss_test_result.append(xss_test_thread_result)
+        xss_test_result = thread_test(self.xss_test_thread_function, XSSCode.objects.all())
 
         return "Possible XSS code: " + ''.join(xss_test_result) \
             if len(xss_test_thread_result) > 0 else "Not detect XSS."

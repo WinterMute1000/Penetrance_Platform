@@ -2,7 +2,7 @@ from ..models import XXECode
 from urllib import parse
 import urllib.request
 from urllib.error import URLError
-import concurrent.futures
+from ...static.test_thread_module import thread_test
 
 
 class XXETestModuleClass:
@@ -39,16 +39,7 @@ class XXETestModuleClass:
         return ''
 
     def xxe_test(self):
-        xxe_test_result = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as xxe_test_executor:
-            xxe_test_threads = [xxe_test_executor.submit(self.xxe_test_thread_function, xxe_object)
-                                for xxe_object in XXECode.objects.all()]
-
-            for xxe_test_thread in concurrent.futures.as_completed(xxe_test_threads):
-                xxe_test_thread_result = xxe_test_thread.result()
-
-                if len(xxe_test_thread_result) > 0:
-                    xxe_test_result.append(xxe_test_thread_result)
+        xxe_test_result = thread_test(self.xxe_test_thread_function,XXECode.objects.all())
 
         return "Possible XXE code: " + ''.join(xxe_test_result) \
             if len(xxe_test_thread_result) > 0 else "Not detect XXE."

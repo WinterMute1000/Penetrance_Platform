@@ -4,6 +4,9 @@ import nmap
 # Port scanning class
 
 class PortScanClass:
+    def __init__(self):
+        pass
+
     port_scanner = nmap.PortScanner()
 
     def scan(self, hosts, ports="0-65535", arg=""):
