@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'penetrance_platform.bot_net',
     'penetrance_platform.base64_encoder_and_decoder',
     'penetrance_platform.hash_generator',
-    'penetrance_platform.file_upload_web_shells'
+    'penetrance_platform.file_upload_web_shells',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 ROOT_URLCONF = 'penetrance_platform.config.urls'
 
