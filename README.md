@@ -77,6 +77,10 @@
   1.8 File upload web shells
     파일 업로드 취약점에 이용할 수 있는 웹 쉘 코드나 웹 쉘의 GitHub 주소를 보여줍니다.
     Show GitHub address of a web shell or web shell that can be exploited for a file upload vulnerability.
+   
+  1.9 로그 보기 (Show Log)
+    Django admin을 사용해서 Log check후 검사한 결과를 볼 수 있습니다. 아이디 비밀번호는 둘다 admin입니다.
+    Use Django admin to view the test results when you checked logging. The ID passwords are both admin.
   
 
 
