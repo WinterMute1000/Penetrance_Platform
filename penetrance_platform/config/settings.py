@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'penetrance_platform.xss',
     'penetrance_platform.sql_injection',
     'penetrance_platform.xxe',
-    'penetrance_platform.bot_net',
     'penetrance_platform.base64_encoder_and_decoder',
     'penetrance_platform.hash_generator',
     'penetrance_platform.file_upload_web_shells',
