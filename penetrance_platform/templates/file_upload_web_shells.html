@@ -8,13 +8,13 @@
 {% block content %}
 <div class="accordion" id="webShellAccordion">
     {% for web_shell in web_shells %}
-    <div class="accordian-item">
+    <div class="accordion-item">
         <h2 class="accordion-header" id="#accordionHeader{{ forloop.counter }}">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionBody{{ forloop.counter }}" aria-expanded="false" aria-controls="#accordionBody{{ forloop.counter }}">
                 {{ web_shell.shell_name }}
             </button>
         </h2>
-        <div id="#accordionBody{{ forloop.counter }}" class="accordion-collapse show" aria-labelledby="#accordionHeader{{ forloop.counter }}" data-bs-parent="#webShellAccordion">
+        <div id="accordionBody{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="accordionHeader{{ forloop.counter }}" data-bs-parent="#webShellAccordion">
             <div class="accordion-body">
                 {{ web_shell.code_or_url }}
             </div>
