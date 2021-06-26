@@ -88,7 +88,6 @@
    1. 프론트엔드 전반적인 부분 (Front end overall part)
    2. 포트 스캔 속도(Port Scanning Rate)
    3. SQL, XSS,XXE 정확도 향상(확인 코드 추가) (Improve SQL, XSS, and XXE accuracy (add more verification code))
-   4. 봇 넷 개발 또는 그냥 안 하기! (Develop a botnet or just don't do it!)
 
 좀 거창하게 썼지만 사실 그냥 제가 편하게 모의해킹 프로젝트 시 쓸려고(+Django 연습할려고) 그냥 제 입맛에 맞게 편하게 만든 것 뿐 입니다.
 더 좋은 웹 취약점 툴들이 많으니 그걸 쓰는 것을 추천합니다. 솔직히 제가 만들었지만 별로 좋지 않은 것 같거든요. (특히 프론트)
