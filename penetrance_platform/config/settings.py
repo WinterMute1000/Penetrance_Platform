@@ -59,7 +59,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 ROOT_URLCONF = 'penetrance_platform.config.urls'
 
